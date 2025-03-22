@@ -22,8 +22,16 @@ public class MainActivity extends Activity implements SensorEventListener {
     private TextView light_name;
     private TextView light_power;
     private TextView light_max_range;
+    private TextView morse_output;
     private static final int MAX_BRIGHTNESS = 255;
     private static final float MAX_LUX = 1000f; // 最大光照值，可根据需要调整
+    private StringBuilder morseBuilder = new StringBuilder();
+    private long lastLightChangeTime;
+    private boolean isDark = false;
+    private static final float DARK_THRESHOLD = 100f; // 遮挡判定阈值
+    private static final long DOT_MAX_DURATION = 2000; // 点的最大持续时间（毫秒）
+    private static final long DASH_MAX_DURATION = 5000; // 划的最大持续时间（毫秒）
+    private static final long LETTER_GAP = 4000; // 字母间隔时间
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +43,8 @@ public class MainActivity extends Activity implements SensorEventListener {
         light_name = (TextView) findViewById(R.id.light_name);
         light_power = (TextView) findViewById(R.id.light_power);
         light_max_range = (TextView) findViewById(R.id.light_max_range);
+        morse_output = (TextView) findViewById(R.id.morse_output);
+        morse_output.setText(""); // 确保初始状态为空
         
         // 添加传感器可用性检查
         Sensor lightSensor = sensor.getDefaultSensor(Sensor.TYPE_LIGHT);
@@ -51,6 +61,13 @@ public class MainActivity extends Activity implements SensorEventListener {
                 startActivity(intent);
             }
         }
+
+        // 添加调试信息
+        morse_output.setOnClickListener(v -> {
+            // 点击文本框时清空内容
+            morse_output.setText("");
+            morseBuilder.setLength(0);
+        });
     }
 
     @Override
@@ -112,6 +129,9 @@ public class MainActivity extends Activity implements SensorEventListener {
             
             // 调整屏幕亮度
             adjustBrightness(values[0]);
+            
+            // 添加莫尔斯码检测
+            processMorseCode(values[0]);
         }
     }
 
@@ -142,6 +162,77 @@ public class MainActivity extends Activity implements SensorEventListener {
             getWindow().setAttributes(layoutParams);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void processMorseCode(float lightValue) {
+        long currentTime = System.currentTimeMillis();
+        
+        if (lightValue < DARK_THRESHOLD && !isDark) {
+            // 光线被遮挡，开始计时
+            isDark = true;
+            lastLightChangeTime = currentTime;
+            morse_output.setText(morse_output.getText() + " ["); // 开始新的输入
+        } else if (lightValue >= DARK_THRESHOLD && isDark) {
+            // 光线恢复，计算持续时间
+            isDark = false;
+            long duration = currentTime - lastLightChangeTime;
+            
+            // 根据持续时间判断是点还是划
+            if (duration <= DOT_MAX_DURATION) {
+                morseBuilder.append(".");
+            } else if (duration <= DASH_MAX_DURATION) {
+                morseBuilder.append("-");
+            }
+            
+            // 更新显示当前输入的莫尔斯码
+            morse_output.setText(morse_output.getText().toString().replaceAll(" \\[.*\\]", "") 
+                + " [" + morseBuilder.toString() + "]");
+            
+            lastLightChangeTime = currentTime;
+        } else if (!isDark && currentTime - lastLightChangeTime > LETTER_GAP) {
+            // 超过字母间隔时间，转换并显示结果
+            String morse = morseBuilder.toString();
+            if (!morse.isEmpty()) {
+                String letter = morseToLetter(morse);
+                // 移除之前显示的莫尔斯码，添加转换后的字母
+                String currentText = morse_output.getText().toString()
+                    .replaceAll(" \\[.*\\]", "");
+                morse_output.setText(currentText + letter);
+                morseBuilder.setLength(0); // 清空缓存
+            }
+        }
+    }
+    
+    private String morseToLetter(String morse) {
+        switch (morse) {
+            case ".-": return "A";
+            case "-...": return "B";
+            case "-.-.": return "C";
+            case "-..": return "D";
+            case ".": return "E";
+            case "..-.": return "F";
+            case "--.": return "G";
+            case "....": return "H";
+            case "..": return "I";
+            case ".---": return "J";
+            case "-.-": return "K";
+            case ".-..": return "L";
+            case "--": return "M";
+            case "-.": return "N";
+            case "---": return "O";
+            case ".--.": return "P";
+            case "--.-": return "Q";
+            case ".-.": return "R";
+            case "...": return "S";
+            case "-": return "T";
+            case "..-": return "U";
+            case "...-": return "V";
+            case ".--": return "W";
+            case "-..-": return "X";
+            case "-.--": return "Y";
+            case "--..": return "Z";
+            default: return "?";
         }
     }
 }

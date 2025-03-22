@@ -4,6 +4,7 @@
     package="com.example.light">
 
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-feature android:name="android.hardware.sensor.light" android:required="true" />
 
     <application
         android:allowBackup="true"

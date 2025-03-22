@@ -7,115 +7,197 @@
     android:background="#F5F5F5"
     tools:context=".MainActivity">
 
-    <androidx.cardview.widget.CardView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="8dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="24dp">
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="光线传感器"
-                android:textSize="24sp"
-                android:textColor="#1976D2"
-                android:textStyle="bold"
-                android:layout_marginBottom="24dp"/>
-
-            <LinearLayout
+            <!-- 光线传感器卡片 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/sensor_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="16dp">
+                android:layout_margin="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="8dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="当前光线强度"
-                    android:textColor="#757575"
-                    android:textSize="14sp"/>
+                    android:orientation="vertical"
+                    android:padding="24dp">
 
-                <TextView
-                    android:id="@+id/textView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="光线强度: 0.0 lux"
-                    android:textSize="24sp"
-                    android:textColor="#212121"
-                    android:textStyle="bold"
-                    android:layout_marginTop="8dp"/>
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="光线传感器"
+                        android:textSize="24sp"
+                        android:textColor="#1976D2"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="24dp"/>
 
-            <LinearLayout
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginBottom="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="当前光线强度"
+                            android:textColor="#757575"
+                            android:textSize="14sp"/>
+
+                        <TextView
+                            android:id="@+id/textView1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="光线强度: 0.0 lux"
+                            android:textSize="24sp"
+                            android:textColor="#212121"
+                            android:textStyle="bold"
+                            android:layout_marginTop="8dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="16dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="传感器名称"
+                                android:textColor="#757575"
+                                android:textSize="14sp"/>
+
+                            <TextView
+                                android:id="@+id/light_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Goldfish Light sensor"
+                                android:textColor="#212121"
+                                android:textSize="16sp"
+                                android:layout_marginTop="4dp"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="功耗"
+                                android:textColor="#757575"
+                                android:textSize="14sp"/>
+
+                            <TextView
+                                android:id="@+id/light_power"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="20.00 mA"
+                                android:textColor="#212121"
+                                android:textSize="16sp"
+                                android:layout_marginTop="4dp"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/light_max_range"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="最大测量范围: 40000.0 lux"
+                        android:textColor="#757575"
+                        android:textSize="14sp"
+                        android:layout_marginTop="24dp"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- 莫尔斯码游戏卡片 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/morse_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="16dp">
+                android:layout_margin="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="8dp">
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="24dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="传感器名称"
+                        android:text="莫尔斯码游戏"
+                        android:textSize="24sp"
+                        android:textColor="#1976D2"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="16dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="使用说明:"
                         android:textColor="#757575"
-                        android:textSize="14sp"/>
-
-                    <TextView
-                        android:id="@+id/light_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Goldfish Light sensor"
-                        android:textColor="#212121"
                         android:textSize="16sp"
-                        android:layout_marginTop="4dp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                        android:layout_marginBottom="8dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="功耗"
+                        android:text="• 短时遮挡 (&lt;0.5秒) = 点(.)\n• 长时遮挡 (0.5-1.5秒) = 划(-)\n• 等待2秒后自动转换字母"
+                        android:textColor="#212121"
+                        android:textSize="14sp"
+                        android:layout_marginBottom="16dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#E0E0E0"
+                        android:layout_marginBottom="16dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="当前输入:"
                         android:textColor="#757575"
-                        android:textSize="14sp"/>
+                        android:textSize="16sp"
+                        android:layout_marginBottom="8dp"/>
 
                     <TextView
-                        android:id="@+id/light_power"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/morse_output"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="20.00 mA"
+                        android:textSize="20sp"
                         android:textColor="#212121"
-                        android:textSize="16sp"
-                        android:layout_marginTop="4dp"/>
-                </LinearLayout>
-            </LinearLayout>
+                        android:minHeight="48dp"
+                        android:background="#F5F5F5"
+                        android:padding="8dp"/>
 
-            <TextView
-                android:id="@+id/light_max_range"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="最大测量范围: 40000.0 lux"
-                android:textColor="#757575"
-                android:textSize="14sp"
-                android:layout_marginTop="24dp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+
+    </ScrollView>
 
 </RelativeLayout>
